@@ -1,0 +1,72 @@
+# 如果你的 Linux 是 Ubuntu:
+$ sudo apt-get install git-all
+
+# 在 git 中添加用户名 user.name 和 用户 email user.email
+$ git config --global user.name "ouchaochao"
+$ git config --global user.email "528422793@qq.com"
+
+# 进入一个文件夹,然后初始化它
+$ cd OCC_Git_tutorials
+$ git init
+
+# 用 status 来查看版本库的状态
+$ git status
+
+# 使用 add 把文件添加进版本库 (staged), .指所有文件
+$ git add .
+# 再次查看状态 status
+$ git status
+# 最后一步就是提交这次的改变, 并在 -m 自定义这次改变的信息, XXX指你做了什么改变
+$ git commit -m "XXX"
+
+# 修改记录 log 
+$ git log
+
+# 如果想要查看这次还没 add (unstaged) 的修改部分 和上个已经 commit 的文件有何不同
+$ git diff # unstaged
+# 如果你已经 add 了这次修改, 文件变成了 “可提交状态” (staged), 我们可以在 diff 中添加参数 --cached 来查看修改
+$ git add .   # add 全部修改文件
+$ git diff --cached  # staged
+# 查看 add 过 (staged) 和 没 add (unstaged) 的修改
+$ git diff HEAD  
+
+
+# 不管我们之前有没有做了一些 add 工作, 这一步让我们回到 上一次的 commit
+$ git reset --hard HEAD    
+# 输出
+HEAD is now at 904e1ba change 2
+-----------------------
+# 看看所有的log
+$ git log --oneline
+# 输出
+904e1ba change 2
+c6762a1 change 1
+13be9a7 create 1.py
+-----------------------
+# 回到 c10ea64 change 1
+# 方式1: "HEAD^"
+$ git reset --hard HEAD^  
+
+# 方式2: "commit id"
+$ git reset --hard c6762a1
+-----------------------
+# 看看现在的 log
+$ git log --oneline
+# 输出
+c6762a1 change 1
+13be9a7 create 1.py
+
+$ git reflog
+# 输出
+c6762a1 HEAD@{0}: reset: moving to c6762a1
+904e1ba HEAD@{1}: commit (amend): change 2
+0107760 HEAD@{2}: commit: change 2
+c6762a1 HEAD@{3}: commit: change 1
+13be9a7 HEAD@{4}: commit (initial): create 1.py
+
+$ git reset --hard 904e1ba
+$ git log --oneline
+# 输出
+904e1ba change 2
+c6762a1 change 1
+13be9a7 create 1.py
